@@ -99,19 +99,12 @@ frontend/src/
 - JWT vérifié par `authenticateToken` sur toutes les routes protégées (appliqué globalement dans `server.ts`)
 - Routes admin : `requireRole(1)` sur les méthodes POST/PUT/DELETE
 - `useAuth()` hook côté frontend pour accéder à `user` et `isAdmin`
-- Token JWT en cookie httpOnly ; userId et contextes dans localStorage
-
-### Multi-tenancy
-
-- La plupart des entités ont une colonne `id_context` pour l'isolation par organisation
-- Les requêtes API incluent le contexte via le header `X-Context-Id`
-- Les requêtes SQL **doivent** filtrer par `id_context` pour éviter les IDOR
+- Token JWT en cookie httpOnly ; userId dans localStorage
 
 ### Protection IDOR
 
-- Les endpoints GET par ID extraient toujours `X-Context-Id` et le passent à la requête SQL
-- Retourner 404 (pas 403) si la ressource n'appartient pas au contexte courant
-- Pattern : `WHERE id = $1 AND id_context = $2`
+- Les endpoints GET par ID vérifient toujours que la ressource appartient à l'utilisateur courant
+- Retourner 404 (pas 403) si la ressource n'appartient pas à l'utilisateur courant
 
 ### Validation
 
@@ -160,7 +153,7 @@ frontend/src/
 - **SQL injection** : toujours utiliser des requêtes paramétrées (`$1, $2, ...`)
 - **XSS** : tous les inputs passent par `sanitizeInputs` middleware (DOMPurify via jsdom)
 - **Auth** : `authenticateToken` présent sur toutes les routes protégées
-- **IDOR** : filtrage par `id_context` dans toutes les requêtes GET par ID
+- **IDOR** : vérifier que la ressource appartient à l'utilisateur dans toutes les requêtes GET par ID
 - **Données sensibles** : jamais de tokens, mots de passe, ou clés dans les logs ou réponses
 - **Mots de passe** : hachage scrypt via `utils/password.ts` (`hashPassword` / `verifyPassword`)
 - **Rate limiting** : sur `/login` via express-rate-limit
