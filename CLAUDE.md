@@ -99,19 +99,12 @@ frontend/src/
 - JWT vérifié par `authenticateToken` sur toutes les routes protégées (appliqué globalement dans `server.ts`)
 - Routes admin : `requireRole(1)` sur les méthodes POST/PUT/DELETE
 - `useAuth()` hook côté frontend pour accéder à `user` et `isAdmin`
-- Token JWT en cookie httpOnly ; userId et contextes dans localStorage
-
-### Multi-tenancy
-
-- La plupart des entités ont une colonne `id_context` pour l'isolation par organisation
-- Les requêtes API incluent le contexte via le header `X-Context-Id`
-- Les requêtes SQL **doivent** filtrer par `id_context` pour éviter les IDOR
+- Token JWT en cookie httpOnly ; userId dans localStorage
 
 ### Protection IDOR
 
-- Les endpoints GET par ID extraient toujours `X-Context-Id` et le passent à la requête SQL
-- Retourner 404 (pas 403) si la ressource n'appartient pas au contexte courant
-- Pattern : `WHERE id = $1 AND id_context = $2`
+- Les endpoints GET par ID vérifient toujours que la ressource appartient à l'utilisateur courant
+- Retourner 404 (pas 403) si la ressource n'appartient pas à l'utilisateur courant
 
 ### Validation
 
@@ -135,6 +128,7 @@ frontend/src/
 **KISS** — Code simple et lisible plutôt que code astucieux. Éviter la sur-ingénierie. Principe de moindre surprise.
 
 **SOLID** :
+
 - **S** — Une seule responsabilité par fonction/classe
 - **O** — Ouvert à l'extension, fermé à la modification
 - **L** — Les classes dérivées remplacent les classes de base
@@ -160,7 +154,7 @@ frontend/src/
 - **SQL injection** : toujours utiliser des requêtes paramétrées (`$1, $2, ...`)
 - **XSS** : tous les inputs passent par `sanitizeInputs` middleware (DOMPurify via jsdom)
 - **Auth** : `authenticateToken` présent sur toutes les routes protégées
-- **IDOR** : filtrage par `id_context` dans toutes les requêtes GET par ID
+- **IDOR** : vérifier que la ressource appartient à l'utilisateur dans toutes les requêtes GET par ID
 - **Données sensibles** : jamais de tokens, mots de passe, ou clés dans les logs ou réponses
 - **Mots de passe** : hachage scrypt via `utils/password.ts` (`hashPassword` / `verifyPassword`)
 - **Rate limiting** : sur `/login` via express-rate-limit
@@ -190,17 +184,18 @@ Toujours utiliser le MCP **Context7** pour consulter la documentation à jour de
 
 Format : `type(scope): description courte`
 
-| Type | Usage |
-|---|---|
-| `feat` | Nouvelle fonctionnalité |
-| `fix` | Correction de bug |
+| Type       | Usage                                   |
+| ---------- | --------------------------------------- |
+| `feat`     | Nouvelle fonctionnalité                 |
+| `fix`      | Correction de bug                       |
 | `refactor` | Refacto sans changement de comportement |
-| `test` | Ajout ou modification de tests |
-| `chore` | Tâche technique (deps, config, CI) |
-| `docs` | Documentation uniquement |
-| `perf` | Amélioration de performance |
+| `test`     | Ajout ou modification de tests          |
+| `chore`    | Tâche technique (deps, config, CI)      |
+| `docs`     | Documentation uniquement                |
+| `perf`     | Amélioration de performance             |
 
 Exemples :
+
 ```
 feat(auth): add password reset via email
 fix(risks): prevent IDOR on GET /risks/:id
@@ -256,7 +251,7 @@ refactor/scope-du-refacto
 
 ### Vue d'ensemble
 
-<!-- Décris le projet en 2-3 phrases : domaine métier, utilisateurs cibles, fonctionnalité principale -->
+<!-- Décris le projet : domaine métier, logique métier utilisateurs cibles, fonctionnalité principale -->
 
 ### Entités principales
 
@@ -268,7 +263,7 @@ refactor/scope-du-refacto
 
 ### Commandes spécifiques
 
-<!-- Commandes de build, migration, seed propres au projet -->
+<!-- Commandes de build, migration -->
 
 ### Patterns spécifiques
 
