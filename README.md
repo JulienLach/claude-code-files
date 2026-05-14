@@ -280,9 +280,3 @@ Dans Claude Code, utilise les skills avec `/nom-du-skill` suivi du contexte :
 /write-tests backend/services/user.services.ts
 /security-audit backend/routes/auth.routes.ts
 ```
-
----
-
-## Licence
-
-MIT
