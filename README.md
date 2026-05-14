@@ -39,7 +39,7 @@ claude-code-files/
 
 ```bash
 # Cloner ce repo
-git clone https://github.com/<ton-username>/claude-code-files.git
+git clone https://github.com/JulienLach/claude-code-files.git
 
 # Copier le CLAUDE.md à la racine de ton projet
 cp claude-code-files/CLAUDE.md mon-projet/CLAUDE.md
@@ -51,11 +51,11 @@ cp -r claude-code-files/.claude mon-projet/.claude
 ### Option 2 — Utiliser comme base d'un nouveau projet
 
 ```bash
-git clone https://github.com/<ton-username>/claude-code-files.git mon-projet
+git clone https://github.com/JulienLach/claude-code-files.git mon-projet
 cd mon-projet
 # Supprimer l'origine et rattacher à ton propre repo
 git remote remove origin
-git remote add origin https://github.com/<ton-username>/mon-projet.git
+git remote add origin https://github.com/JulienLach/mon-projet.git
 ```
 
 ---
@@ -71,12 +71,12 @@ git remote add origin https://github.com/<ton-username>/mon-projet.git
 
 Claude Code propose trois mécanismes d'extension complémentaires :
 
-| | **Skills** | **MCP** | **Plugins** |
-|---|---|---|---|
-| **Qu'est-ce que c'est** | Fichiers `.md` dans `.claude/skills/` | Serveurs externes connectés à Claude | Bundles complets (skills + MCP + hooks) |
-| **Invoquer** | `/nom-du-skill` | Automatique ou à la demande | `/nom-du-plugin:commande` |
-| **Installer** | Copier le fichier `.md` | `claude mcp add` | `claude plugin install` |
-| **Usage** | Prompts guidés réutilisables | Accès outils externes (API, DB, docs) | Features complètes packagées |
+|                         | **Skills**                            | **MCP**                               | **Plugins**                             |
+| ----------------------- | ------------------------------------- | ------------------------------------- | --------------------------------------- |
+| **Qu'est-ce que c'est** | Fichiers `.md` dans `.claude/skills/` | Serveurs externes connectés à Claude  | Bundles complets (skills + MCP + hooks) |
+| **Invoquer**            | `/nom-du-skill`                       | Automatique ou à la demande           | `/nom-du-plugin:commande`               |
+| **Installer**           | Copier le fichier `.md`               | `claude mcp add`                      | `claude plugin install`                 |
+| **Usage**               | Prompts guidés réutilisables          | Accès outils externes (API, DB, docs) | Features complètes packagées            |
 
 > Ce repo fournit des **skills** et un **MCP** (Context7). Les plugins officiels Anthropic s'installent séparément.
 
@@ -87,6 +87,7 @@ Claude Code propose trois mécanismes d'extension complémentaires :
 #### Code Review
 
 Le plugin officiel Anthropic pour la revue de PR. Il lance **5 agents spécialisés en parallèle** :
+
 - Vérification conformité `CLAUDE.md`
 - Détection de bugs
 - Analyse du contexte git (historique, commits liés)
@@ -123,14 +124,15 @@ claude plugin install https://claude.com/plugins/superpowers
 
 **Commandes disponibles :**
 
-| Commande | Description |
-|---|---|
-| `/brainstorming` | Session Socratique pour explorer et affiner les besoins **avant** de coder |
-| `/execute-plan` | Implémente un plan par batches avec un agent de revue intégré à chaque checkpoint |
-| `/debugging` | Débogage en 4 phases avec revue architecturale automatique après 3 tentatives échouées |
-| `/skill-authoring` | Crée et teste de nouveaux skills Claude Code en appliquant les principes TDD |
+| Commande           | Description                                                                            |
+| ------------------ | -------------------------------------------------------------------------------------- |
+| `/brainstorming`   | Session Socratique pour explorer et affiner les besoins **avant** de coder             |
+| `/execute-plan`    | Implémente un plan par batches avec un agent de revue intégré à chaque checkpoint      |
+| `/debugging`       | Débogage en 4 phases avec revue architecturale automatique après 3 tentatives échouées |
+| `/skill-authoring` | Crée et teste de nouveaux skills Claude Code en appliquant les principes TDD           |
 
 **Pourquoi l'utiliser avec cette stack :**
+
 - `/brainstorming` avant toute nouvelle feature pour clarifier le besoin avant de toucher au code
 - `/execute-plan` pour les implémentations complexes (nouvelle entité, refacto) avec validation continue
 - `/debugging` en complément du skill `/debug` de ce repo pour les bugs récalcitrants
@@ -182,12 +184,9 @@ Utilise context7 pour me montrer comment configurer les middlewares dans Express
 
 ```json
 {
-  "permissions": {
-    "allow": [
-      "mcp__plugin_context7_context7__query-docs",
-      "mcp__plugin_context7_context7__resolve-library-id"
-    ]
-  }
+    "permissions": {
+        "allow": ["mcp__plugin_context7_context7__query-docs", "mcp__plugin_context7_context7__resolve-library-id"]
+    }
 }
 ```
 
@@ -206,6 +205,7 @@ claude mcp add obsidian -- npx -y mcp-obsidian /chemin/vers/ton/vault
 ```
 
 **Cas d'usage :**
+
 - Créer une note de décision d'architecture directement depuis Claude Code
 - Rechercher dans tes notes de projet sans quitter le terminal
 - Mettre à jour un backlog ou un journal de bord en cours de session
@@ -214,16 +214,16 @@ claude mcp add obsidian -- npx -y mcp-obsidian /chemin/vers/ton/vault
 
 ```json
 {
-  "permissions": {
-    "allow": [
-      "mcp__plugin_context7_context7__query-docs",
-      "mcp__plugin_context7_context7__resolve-library-id",
-      "mcp__obsidian__read_note",
-      "mcp__obsidian__write_note",
-      "mcp__obsidian__search_notes",
-      "mcp__obsidian__list_directory"
-    ]
-  }
+    "permissions": {
+        "allow": [
+            "mcp__plugin_context7_context7__query-docs",
+            "mcp__plugin_context7_context7__resolve-library-id",
+            "mcp__obsidian__read_note",
+            "mcp__obsidian__write_note",
+            "mcp__obsidian__search_notes",
+            "mcp__obsidian__list_directory"
+        ]
+    }
 }
 ```
 
@@ -239,15 +239,19 @@ Le `CLAUDE.md` contient une section `## [Contexte projet]` en bas du fichier. Re
 ## [Contexte projet]
 
 ### Vue d'ensemble
+
 Application de gestion des congés pour PME. Utilisateurs : RH (admin) et employés.
 
 ### Entités principales
+
 - users, leave_requests, leave_types, departments
 
 ### Variables d'environnement
+
 - DATABASE_URL, JWT_SECRET, SMTP_HOST, PORT
 
 ### Patterns spécifiques
+
 - Les demandes de congé sont scopées par département (id_department)
 - Workflow d'approbation : pending → approved / rejected
 ```
@@ -256,14 +260,14 @@ Application de gestion des congés pour PME. Utilisateurs : RH (admin) et employ
 
 ## Skills disponibles
 
-| Commande | Description |
-|---|---|
-| `/code-review` | Revue de code : sécurité, qualité, architecture, performance |
-| `/debug` | Débogage structuré : localisation → hypothèses → correction → prévention |
-| `/refactor` | Refacto sécurisé : plan avant action, vérification que le comportement ne change pas |
-| `/add-entity` | Création d'une entité full-stack avec checklist complète |
-| `/write-tests` | Rédaction de tests unitaires et d'intégration Vitest |
-| `/security-audit` | Audit de sécurité OWASP : injection, auth, IDOR, exposition de données |
+| Commande          | Description                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------ |
+| `/code-review`    | Revue de code : sécurité, qualité, architecture, performance                         |
+| `/debug`          | Débogage structuré : localisation → hypothèses → correction → prévention             |
+| `/refactor`       | Refacto sécurisé : plan avant action, vérification que le comportement ne change pas |
+| `/add-entity`     | Création d'une entité full-stack avec checklist complète                             |
+| `/write-tests`    | Rédaction de tests unitaires et d'intégration Vitest                                 |
+| `/security-audit` | Audit de sécurité OWASP : injection, auth, IDOR, exposition de données               |
 
 ### Utilisation
 
@@ -276,15 +280,6 @@ Dans Claude Code, utilise les skills avec `/nom-du-skill` suivi du contexte :
 /write-tests backend/services/user.services.ts
 /security-audit backend/routes/auth.routes.ts
 ```
-
----
-
-## Contribuer
-
-Les PRs sont les bienvenues pour améliorer les skills ou le CLAUDE.md. Chaque skill doit être :
-- Générique (applicable à toute la stack, pas à un projet spécifique)
-- Pédagogique (expliquer le pourquoi, pas juste générer du code)
-- Complet (couvrir les cas nominaux ET les cas d'erreur)
 
 ---
 

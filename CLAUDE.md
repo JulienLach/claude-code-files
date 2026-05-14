@@ -128,6 +128,7 @@ frontend/src/
 **KISS** — Code simple et lisible plutôt que code astucieux. Éviter la sur-ingénierie. Principe de moindre surprise.
 
 **SOLID** :
+
 - **S** — Une seule responsabilité par fonction/classe
 - **O** — Ouvert à l'extension, fermé à la modification
 - **L** — Les classes dérivées remplacent les classes de base
@@ -183,17 +184,18 @@ Toujours utiliser le MCP **Context7** pour consulter la documentation à jour de
 
 Format : `type(scope): description courte`
 
-| Type | Usage |
-|---|---|
-| `feat` | Nouvelle fonctionnalité |
-| `fix` | Correction de bug |
+| Type       | Usage                                   |
+| ---------- | --------------------------------------- |
+| `feat`     | Nouvelle fonctionnalité                 |
+| `fix`      | Correction de bug                       |
 | `refactor` | Refacto sans changement de comportement |
-| `test` | Ajout ou modification de tests |
-| `chore` | Tâche technique (deps, config, CI) |
-| `docs` | Documentation uniquement |
-| `perf` | Amélioration de performance |
+| `test`     | Ajout ou modification de tests          |
+| `chore`    | Tâche technique (deps, config, CI)      |
+| `docs`     | Documentation uniquement                |
+| `perf`     | Amélioration de performance             |
 
 Exemples :
+
 ```
 feat(auth): add password reset via email
 fix(risks): prevent IDOR on GET /risks/:id
@@ -249,7 +251,7 @@ refactor/scope-du-refacto
 
 ### Vue d'ensemble
 
-<!-- Décris le projet en 2-3 phrases : domaine métier, utilisateurs cibles, fonctionnalité principale -->
+<!-- Décris le projet : domaine métier, logique métier utilisateurs cibles, fonctionnalité principale -->
 
 ### Entités principales
 
@@ -261,7 +263,7 @@ refactor/scope-du-refacto
 
 ### Commandes spécifiques
 
-<!-- Commandes de build, migration, seed propres au projet -->
+<!-- Commandes de build, migration -->
 
 ### Patterns spécifiques
 
