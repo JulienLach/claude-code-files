@@ -55,7 +55,7 @@ git clone https://github.com/JulienLach/claude-code-files.git mon-projet
 cd mon-projet
 # Supprimer l'origine et rattacher à ton propre repo
 git remote remove origin
-git remote add origin https://github.com/JulienLach/mon-projet.git
+git remote add origin https://github.com/<ton-nom-utilisateur>/mon-projet.git
 ```
 
 ---
